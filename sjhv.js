@@ -52,7 +52,6 @@ var sjhv = {
     this.exec(n);
   },
   exec: function exec(e) {
-    let execFunc = new Function('e', '"use strict";' + e.dataset.sjhv);
-    execFunc(e);
+    new Function('e', '"use strict";' + e.dataset.sjhv)(e);
   }
 };
