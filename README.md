@@ -23,7 +23,7 @@ In it, you will have to give this node a ID for sjhv.
 <div data-sjhv="sjhvDivID"></div>
 ```
 
-### Once a node has an ID, you can assign values to it.
+### Once a node has an ID, you can bind values to it.
 
 ```html
 <script>
@@ -64,34 +64,25 @@ sjhv.updateOnly(n);       //Updates only n
 ```html
 <body>
 
-    <div>
-        <div data-sjhv="e.textContent = someObject.currentValue"></div>
-        <input type="range" value=1 data-sjhv="e.max = someObject.maxValue;" onChange=setCurrentValue(this)>
-        <input type="text" data-sjhv="e.value = someObject.maxValue" onChange=setMaxValue(this) value="1">
-    </div>
+    <input type="text" oninput=setText(this) value="">
+    <div data-sjhv='sjhvDivID'></div>
 
 </body>
 
 <script>
-    var someObject = {
-        currentValue: 1,
-        maxValue: 100,
-    }
 
-    function setMaxValue(element) {
-        someObject.maxValue = element.value;
-        sjhv.updateHTML();
-    }
+    let domModel = new SJHV(); //Initialize a new SJHV Data Model. Once, SJHV can be used more than once.
 
-    function setCurrentValue(element) {
-        someObject.currentValue = element.value;
-        sjhv.updateHTML();
-    }
+    domModel.setNestedValue("someProperty", ""); //Add a new property to the value-database in the SJHV called someProperty with the value ""
 
-    document.onload = sjhv.updateHTML();
+    domModel.setNestedBound("sjhvDivID.textContent", domModel.boundVar("someProperty")) //Bind the property of the value-database with the node's textContent
+
+    function setText(e) {
+        domModel.setNestedValue("someProperty", e.value);
+        domModel.updateHTML();
+    }
 
 </script>
 ```
 
-In this example, the range input value will be displayed inside a div when moving the range input.
-Additionally, you can set the range input max value by setting the text inside the text field next to the range input.
+In this example, the value of the text input will be displayed beneath it.
