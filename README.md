@@ -14,30 +14,33 @@ sjhv is meant to simplify the process of updating values of HTML Nodes.
 
 ### Adding a sjhv (simple JavaScript HTML value) to a HTML Node
 
-To add a sjhv to a node, simply add the `data-sjhv`attribute to the node.
-In it, you can write a string of JavaScript.
-The HTML node is referenced by e.
+To add a sjhv to a node, simply add the `data-sjhv` attribute to the node.
+In it, you will have to give this node a ID for sjhv.
 
-#### Example of updating the text of a div:
+#### Example of an ID for a div:
 
 ```html
-<div data-sjhv="e.textContent=foo"></div>
+<div data-sjhv="sjhvDivID"></div>
+```
 
+### Once a node has an ID, you can assign values to it.
+
+```html
 <script>
+    
+    let domModel = new SJHV(); //Initialize a new SJHV Data Model. Once, SJHV can be used more than once.
 
-foo = "SomeText";
+    domModel.setNestedValue("someProperty", ""); //Add a new property to the value-database in the SJHV called someProperty with the value ""
 
-sjhv.updateHTML();
-
+    domModel.setNestedBound("sjhvDivID.textContent", domModel.boundVar("someProperty")) //Bind the property of the value-database with the node's textContent
+    
 </script>
 ```
 
-Of course, you can much more than updating just the text of a div.
-For example, you can change the styling of e data-sjhv="e.style.someStyle = someStyleValue".
 
 ### Updating HTML
 
-In order to apply changes made to variables that are used by sjhv s you can call the following functions:
+In order to update the HTML you will need to evoke one of those functions:
 
 ```js
 sjhv.updateHTML();        //Updates the whole document
