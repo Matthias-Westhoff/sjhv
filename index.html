@@ -8,7 +8,6 @@
     <title>sjhv - Example</title>
 
     <script src="sjhv.js"></script>
-    <script src="widgets/MultiRangeSlider.js"></script>
 
 </head>
 
@@ -17,68 +16,8 @@
     <sjhv-MultiRange></sjhv-MultiRange>
 
     <div>
-        <!-- <input type="range" value=1 data-sjhv="e.max = someObject.maxValue;" onChange=setCurrentValue(this)> -->
         <input type="text" oninput=setText(this) value="">
-        <div data-sjhv='{"textContent": "divValue"}'></div>
-        <div data-sjhv='{"textContent": "divValue"}'></div>
-        <div data-sjhv='{"textContent": "divValue"}'></div>
-        <div data-sjhv='{"textContent": "divValue"}'></div>
-        <div data-sjhv='{"textContent": "divValue"}'></div>
-        <div data-sjhv='{"textContent": "divValue"}'></div>
-        <div data-sjhv='{"textContent": "divValue"}'></div>
-        <div data-sjhv='{"textContent": "divValue"}'></div>
-        <div data-sjhv='{"textContent": "divValue"}'></div>
-        <div data-sjhv='{"textContent": "divValue"}'></div>
-        <div data-sjhv='{"textContent": "divValue"}'></div>
-        <div data-sjhv='{"textContent": "divValue"}'></div>
-        <div data-sjhv='{"textContent": "divValue"}'></div>
-        <div data-sjhv='{"textContent": "divValue"}'></div>
-        <div data-sjhv='{"textContent": "divValue"}'></div>
-        <div data-sjhv='{"textContent": "divValue"}'></div>
-        <div data-sjhv='{"textContent": "divValue"}'></div>
-        <div data-sjhv='{"textContent": "divValue"}'></div>
-        <div data-sjhv='{"textContent": "divValue"}'></div>
-        <div data-sjhv='{"textContent": "divValue"}'></div>
-        <div data-sjhv='{"textContent": "divValue"}'></div>
-        <div data-sjhv='{"textContent": "divValue"}'></div>
-        <div data-sjhv='{"textContent": "divValue"}'></div>
-        <div data-sjhv='{"textContent": "divValue"}'></div>
-        <div data-sjhv='{"textContent": "divValue"}'></div>
-        <div data-sjhv='{"textContent": "divValue"}'></div>
-        <div data-sjhv='{"textContent": "divValue"}'></div>
-        <div data-sjhv='{"textContent": "divValue"}'></div>
-        <div data-sjhv='{"textContent": "divValue"}'></div>
-        <div data-sjhv='{"textContent": "divValue"}'></div>
-        <div data-sjhv='{"textContent": "divValue"}'></div>
-        <div data-sjhv='{"textContent": "divValue"}'></div>
-        <div data-sjhv='{"textContent": "divValue"}'></div>
-        <div data-sjhv='{"textContent": "divValue"}'></div>
-        <div data-sjhv='{"textContent": "divValue"}'></div>
-        <div data-sjhv='{"textContent": "divValue"}'></div>
-        <div data-sjhv='{"textContent": "divValue"}'></div>
-        <div data-sjhv='{"textContent": "divValue"}'></div>
-        <div data-sjhv='{"textContent": "divValue"}'></div>
-        <div data-sjhv='{"textContent": "divValue"}'></div>
-        <div data-sjhv='{"textContent": "divValue"}'></div>
-        <div data-sjhv='{"textContent": "divValue"}'></div>
-        <div data-sjhv='{"textContent": "divValue"}'></div>
-        <div data-sjhv='{"textContent": "divValue"}'></div>
-        <div data-sjhv='{"textContent": "divValue"}'></div>
-        <div data-sjhv='{"textContent": "divValue"}'></div>
-        <div data-sjhv='{"textContent": "divValue"}'></div>
-        <div data-sjhv='{"textContent": "divValue"}'></div>
-        <div data-sjhv='{"textContent": "divValue"}'></div>
-        <div data-sjhv='{"textContent": "divValue"}'></div>
-        <div data-sjhv='{"textContent": "divValue"}'></div>
-        <div data-sjhv='{"textContent": "divValue"}'></div>
-        <div data-sjhv='{"textContent": "divValue"}'></div>
-        <div data-sjhv='{"textContent": "divValue"}'></div>
-        <div data-sjhv='{"textContent": "divValue"}'></div>
-        <div data-sjhv='{"textContent": "divValue"}'></div>
-        <div data-sjhv='{"textContent": "divValue"}'></div>
-        <div data-sjhv='{"textContent": "divValue"}'></div>
-        <div data-sjhv='{"textContent": "divValue"}'></div>
-        <div data-sjhv='{"textContent": "divValue"}'></div>
+        <div data-sjhv='textDisplay'></div>
     </div>
 
 </body>
@@ -87,11 +26,15 @@
 
     var domModel = new SJHV();
 
-    function setText(e) {
-        console.log(e);
-        domModel.values["divValue"] = e.value;
+    domModel.setNestedValue("divValue", "");
 
+    domModel.setNestedBound("textDisplay.textContent", domModel.boundVar("divValue"))
+
+    function setText(e) {
+
+        domModel.setNestedValue("divValue", e.value);
         domModel.updateHTML();
+
     }
 
 </script>

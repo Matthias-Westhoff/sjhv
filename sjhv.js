@@ -17,7 +17,7 @@ class SJHV {
   * Updates the whole document
   * @constructor
   */
-  updateHTML () {
+  updateHTML() {
     var sjhvElements = document.querySelectorAll("[data-sjhv]");
 
     for (var i = 0; i < sjhvElements.length; i++) {
@@ -65,16 +65,120 @@ class SJHV {
   };
 
   exec(e) {
-    let entries = Object.entries(JSON.parse(e.dataset.sjhv));
-    let entrieslen = entries.length;
 
-    for(let i = 0; i < entrieslen; i++) {
-      let property = entries[i];
-      e[property[0]] = this.values[property[1]];
+    let sjhv = this;
+
+    let id = e.dataset.sjhv;
+
+    execPath(sjhv.bounds[id], e)
+
+    function execPath(path, pathE) {
+
+      for (var prop in path) {
+        if (path.hasOwnProperty(prop)) {
+
+          let bound = path[prop];
+
+          if (bound instanceof BoundVar) {
+
+            let value = sjhv;
+
+            for (let i = 0; i < bound.path.length; i++) {
+
+              value = value[bound.path[i]];
+
+            }
+
+            pathE[prop] = value
+
+          } else if (typeof bound == "object") {
+
+            execPath(bound, pathE[prop]);
+
+          }
+
+          else {
+
+            pathE[prop] = bound;
+
+          }
+        }
+      }
+
     }
 
   };
 
-  values = {};
+  boundVar(v) {
+
+    return new BoundVar(["values"].concat(v.split(".")));
+
+  };
+
+  setNestedValue(field, val) {
+
+    let fields = field.split(".")
+
+    let ob = this.values
+
+    for (let i = 0; i < fields.length - 1; i++) {
+
+      if (!ob.hasOwnProperty(fields[i])) {
+
+        ob[fields[i]] = {};
+
+      }
+
+      ob = ob[fields[i]]
+
+    }
+
+    ob[fields[fields.length - 1]] = val;
+
+    return field;
+
+  };
+
+  setNestedBound(field, val) {
+
+    let fields = field.split(".")
+
+    let ob = this.bounds
+
+    for (let i = 0; i < fields.length - 1; i++) {
+
+      if (!this.hasOwnProperty(fields[i])) {
+
+        ob[fields[i]] = {};
+
+      }
+
+      ob = ob[fields[i]]
+
+    }
+
+    ob[fields[fields.length - 1]] = val;
+
+    return field;
+
+  };
+
+  values = {
+
+  };
+
+  bounds = {
+
+  };
+
+};
+
+class BoundVar {
+
+  constructor(path) {
+
+    this.path = typeof path == "object" ? path : [];
+
+  }
 
 };
